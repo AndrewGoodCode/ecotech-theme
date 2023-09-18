@@ -1,0 +1,148 @@
+<div class="customstyle-{{ section.id }} container px-4 px-md-1 "  >
+  <div class='title-container border-3 border-start border-dark ps-4'>
+    <h5 class='title'>{{section.settings.title}}</h5>
+    <div class='title'>{{section.settings.subtitle}}</div>
+  </div>
+  <div class='row py-3 py-md-5 text-left'>
+    <div class='col-md-6 pe-md-5 py-4'>
+      {% if section.settings.image1 != blank %}
+        <img src='{{section.settings.image1 | img_url }}' class='w-100 mb-4' alt="image1" />
+      {%  endif %}
+      <h5 class='heading mt-4'>{{section.settings.heading1}}</h5>
+      <div class='rich-content py-4'>{{section.settings.content1}}</div>   
+      <a
+        class="mdc-button mdc-button--outlined mt-5"
+        href="{{ object.settings.buttonUrl1 }}"
+      >
+        <span class="mdc-button__ripple"></span>
+        <span class="mdc-button__label">{{- object.settings.buttonText1 }}</span>
+      </a>
+    </div>
+    <div class='col-md-6 ps-md-5 py-4 text-left'>
+      {% if section.settings.image2 != blank %}
+        <img src='{{section.settings.image2 | img_url }}' class='w-100 mb-4'  alt="image2" />
+      {%  endif %}
+      <h5 class='heading mt-4'>{{section.settings.heading2}}</h5>
+      <div class='rich-content py-4'>{{section.settings.content2}}</div> 
+      <a
+        class="mdc-button mdc-button--outlined mt-5"
+        href="{{ object.settings.buttonUrl2 }}"
+      >
+        <span class="mdc-button__ripple"></span>
+        <span class="mdc-button__label">{{- object.settings.buttonText2 -}}</span>
+      </a>
+    </div>
+  </div>
+</div>
+<style>  
+  .customstyle-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;    
+  }
+  .customstyle-{{ section.id }} .rich-content p  {
+    font-size : 15px;
+    min-height : 15px;
+    margin-bottom : 0px;
+  }
+</style>
+{% schema %}
+{
+  "name": "Structured Content",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "HOW WE HELP"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "We are dedicated to sharing our knowledge on traditional techniques and materials."
+    },
+    {
+      "type": "image_picker",
+      "id": "image1",
+      "label": "Image1"
+    },
+    {
+      "type": "text",
+      "id": "heading1",
+      "label": "Heading 1",
+      "default": "ARCHITECHTS, INTERIOR DESIGNERS & BUILDERS"
+    },
+    {
+      "type": "richtext",
+      "id": "content1",
+      "label" : "Content 1",
+      "default": "<p>Content 1</p>"
+    },
+    {
+      "type": "text",
+      "id": "buttonText1",
+      "label": "Button Text 1",
+      "default": "ENQUIRE NOW"
+    },
+    {
+      "type": "text",
+      "id": "buttonUrl1",
+      "label": "Button Url 1",
+      "default": "/"
+    },
+    {
+      "type": "image_picker",
+      "id": "image2",
+      "label": "Image2"
+    },
+    {
+      "type": "text",
+      "id": "heading2",
+      "label": "Heading 2",
+      "default": "DIY CLIENTS"
+    },
+    {
+      "type": "richtext",
+      "id": "content2",
+      "label" : "Content 2",
+      "default": "<p>Content 2</p>"
+    },
+    {
+      "type": "text",
+      "id": "buttonText2",
+      "label": "Button Text 2",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "text",
+      "id": "buttonUrl2",
+      "label": "Button Url 2",
+      "default": "/"
+    },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Top spacing",
+        "min": 0,
+        "max": 80,
+        "default": 20,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Bottom spacing",
+        "default": 0,
+        "min": 0,
+        "max": 80,
+        "unit": "px"
+      }
+  ],
+  "presets": [
+    {
+      "name": "Structured Content"
+    }
+  ]
+}
+{% endschema %}

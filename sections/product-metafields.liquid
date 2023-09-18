@@ -1,0 +1,66 @@
+<div id="metafields">
+  <div class="col">
+    {% if product.metafields.custom.warranty %}
+      <p><strong>Warranty</strong>: {{ product.metafields.custom.warranty }}</p>
+    {% endif %}}
+    {% if product.metafields.custom.benefits %}
+      <p><strong>Benefits</strong>: {{ product.metafields.custom.benefits }}</p>
+    {% endif %}}
+    {% if product.metafields.custom.care_and_cleaning %}
+      <p><strong>Care &amp; Cleaning</strong>: {{ product.metafields.custom.care_and_cleaning }}</p>
+    {% endif %}}
+    {% if product.metafields.custom.how_to %}
+      <p><strong>How To</strong>: {{ product.metafields.custom.how_to }}</p>
+    {% endif %}}
+    {% if product.metafields.custom.suitable_substrates %}
+      <p><strong>Suitable Substrates</strong>: {{ product.metafields.custom.suitable_substrates }}</p>
+    {% endif %}}
+  </div>
+  <div class="col">
+    {% if product.metafields.custom.bndl_products_in_this_kit %}
+      <p><strong>BNDL Products in this Kit</strong>: {{ product.metafields.custom.bndl_products_in_this_kit }}</p>
+    {% endif %}}
+    {% if product.metafields.custom.bndl_required_tools %}
+      <p><strong>BNDL Required Tools</strong>: {{ product.metafields.custom.bndl_required_tools }}</p>
+    {% endif %}}
+    {% if product.metafields.custom.highlights %}
+      <p><strong>Highlights</strong>: {{ product.metafields.custom.highlights }}</p>
+    {% endif %}}
+    {% if product.metafields.custom.technical_specifications %}
+      <p><strong>Technical Specifications</strong>: {{ product.metafields.custom.technical_specifications }}</p>
+    {% endif %}}
+    {% if product.metafields.custom.certifications %}
+      <p><strong>Certifications</strong>: {{ product.metafields.custom.certifications }}</p>
+    {% endif %}}
+  </div>
+  <div class="col">
+    {% if product.metafields.my_fields.product_brochure %}
+      <p><strong>Product Brochure</strong>: {{ product.metafields.my_fields.product_brochure }}</p>
+    {% endif %}}
+    {% if product.metafields.my_fields.you_may_also_like %}
+      <p><strong>You May Also Like</strong>: {{ product.metafields.my_fields.you_may_also_like }}</p>
+    {% endif %}}
+    {% if product.metafields.my_fields.similar_products %}
+      <p><strong>Similar Products</strong>: {{ product.metafields.my_fields.similar_products }}</p>
+    {% endif %}}
+    {% if product.metafields.my_fields.performance2 %}
+      <p><strong>Performance</strong>: {{ product.metafields.my_fields.performance2 }}</p>
+    {% endif %}}
+    {% if product.metafields.my_fields.key_features %}
+      <p><strong>Key Features</strong>: {{ product.metafields.my_fields.key_features }}</p>
+    {% endif %}}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Product Metafields",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

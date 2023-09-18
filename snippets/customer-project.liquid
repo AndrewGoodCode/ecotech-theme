@@ -1,0 +1,295 @@
+<style>
+  /* for project selection css */
+  .project-picker {
+    text-align: center;
+  }
+  .project-alert {
+    padding-bottom: 7px;
+  }
+  .project-picker p {
+  }
+  .project-picker select.form-select {
+    margin-left: 10px;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    display: inline;
+    width: 210px;
+  }
+  .project-picker .col {
+    display: inline-block;
+    margin: 0;
+    padding: 5px;
+  }
+  .project-picker label {
+  }
+  .project-picker .unit-type {
+    position: absolute;
+    display: inline-block;
+    top: 5px;
+    right: 5px;
+    text-align: right;
+  }
+  .project-picker .unit-type li {
+    font-size: 10px;
+    display: block;
+    border: none;
+    background: transparent;
+    color: #000;
+    cursor: pointer;
+  }
+  .project-picker form input {
+    border: 1px solid #ddd;
+  }
+  .project-new strong,
+  .project-history strong {
+    display: block !important;
+  }
+  .project-new span,
+  .project-history span {
+    display: block;
+    font-size: 13px;
+    padding-top: 3px;
+  }
+  .project-history .table > :not(caption) > * > * {
+    padding: 0.1rem 0.5rem;
+  }
+  .project-history .table th,
+  .project-history .table td {
+    text-align: left;
+  }
+  .project-history .table tr {
+    cursor: pointer;
+  }
+  .project-history hr,
+  .project-new hr {
+    width: 98% !important;
+  }
+  #optionSelect0,
+  #optionSelect1 {
+    display: none;
+  }
+  .show-content {
+    display: flex !important;
+  }
+  /* breadcrumbs**/
+  .breadcrumbs-style_2 {
+    padding-bottom: 10px !important;
+    padding-top: 10px !important;
+  }
+  .project-picker {
+    margin-top: -60px !important;
+  }
+  /* for confirm modal css */
+  .modal-confirm {
+    color: #636363;
+    width: 350px;
+  }
+  .modal-confirm .modal-content {
+    padding: 20px;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+    font-size: 14px;
+  }
+  .modal-confirm .modal-header {
+    border-bottom: none;
+    position: relative;
+  }
+  .modal-confirm h4 {
+    text-align: center;
+    font-size: 26px;
+    margin: 30px 0 -10px;
+  }
+  .modal-confirm .close {
+    position: absolute;
+    top: -5px;
+    right: -2px;
+  }
+  .modal-confirm .modal-body {
+    color: #999;
+  }
+  .modal-confirm .modal-footer {
+    border: none;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 13px;
+    padding: 10px 15px 25px;
+  }
+  .modal-confirm .modal-footer a {
+    color: #999;
+  }
+  .modal-confirm .icon-box {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    border-radius: 50%;
+    z-index: 9;
+    text-align: center;
+    border: 3px solid #f15e5e;
+  }
+  .modal-confirm .icon-box i {
+    color: #f15e5e;
+    font-size: 46px;
+    display: inline-block;
+    margin-top: 13px;
+  }
+  .modal-confirm .btn,
+  .modal-confirm .btn:active {
+    color: #fff;
+    border-radius: 4px;
+    background: #60c7c1;
+    text-decoration: none;
+    transition: all 0.4s;
+    line-height: normal;
+    min-width: 120px;
+    border: none;
+    min-height: 40px;
+    border-radius: 3px;
+    margin: 0 5px;
+  }
+  .modal-confirm .btn-secondary {
+    background: #c1c1c1;
+  }
+  .modal-confirm .btn-secondary:hover,
+  .modal-confirm .btn-secondary:focus {
+    background: #a8a8a8;
+  }
+  .modal-confirm .btn-danger {
+    background: #f15e5e;
+  }
+  .modal-confirm .btn-danger:hover,
+  .modal-confirm .btn-danger:focus {
+    background: #ee3535;
+  }
+  .trigger-btn {
+    display: inline-block;
+    margin: 100px auto;
+  }
+  .btn-success {
+    background-color : #28a745!important;
+  }
+  .btn-secondary {
+    background-color : #6c757d!important;
+  }
+  .btn-success:hover, .btn-secondary:hover {
+    opacity : 0.6;
+  }
+</style>
+<div class="row">
+  <input type="hidden" id="customer-id" value="{{customer.id}}">
+  <div class="col">
+    <!-- start Project Banner -->
+    <div class="project-picker alert alert-light m-3 pt-2 pb-1 alert-dismissible fade show" role="alert">
+      <!-- start Project Alert -->
+      <p class="mb-0 project-alert">
+        <strong>Working on a project?</strong> Save a summary to accompany you through the site!
+        <select id="projectSelect" class="form-select form-select-sm" aria-label=".form-select-sm">
+          <option selected value='select'>Add New or Select Previous</option>
+          <option value="0">Add New Project</option>
+          <option value="1">Select Previous Project</option>
+        </select>
+      </p>
+      <!-- end Project Alert -->
+      <!-- start Project New (only opens if Add New Project is selected) -->
+      <form class="row project-new g-1 needs-validation" id="optionSelect0" novalidate>
+        <hr class="mt-2">
+        <div class="col col-md-2">
+          <p class="display-6 fs-5 text-start">Create a <strong>New Project</strong></p>
+        </div>
+        <div class="col-md-9 row">
+          <div class="col col-md-4">
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control form-control-plaintext"
+                id="formProjectName"
+                placeholder="My Project"
+              >
+              <label for="formProjectName" class="form-label text-uppercase">Name</label>
+            </div>
+          </div>
+          <div class="col col-md-5">
+            <div class="form-floating">
+              <input
+                type="text"
+                class="form-control form-control-plaintext"
+                id="formProjectNote"
+                placeholder="(optional) example: kitchen floor, plywood subfloor"
+              >
+              <label for="formProjectNote" class="form-label text-uppercase">Notes</label>
+            </div>
+          </div>
+          <div class="col col-md-3">
+            <div class="form-floating has-validation">
+              <input type="text" class="form-control form-control-plaintext" id="formProjectArea" placeholder="99999">
+              <label for="formProjectArea" class="form-label text-uppercase">Size</label>
+              <ul class="list-group unit-type">
+                <li class="sqf list-group-item p-0 active" selected>SQF</li>
+                <li class="sqm list-group-item p-0">SQM</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col col-md-1">
+          <button href='#myModal'  class="btn btn-success" data-bs-toggle='modal' >Save</button>
+        </div>
+      </form>
+      <!-- end Project New -->
+      <!-- start Project History (only opens if Select Previous Project is selected) -->
+      <div class="row project-history g-1" id="optionSelect1">
+        <hr class="mt-2">
+        <div class="col col-md-2">
+          <p class="display-6 fs-5 text-start">
+            Select A <strong>Previous Project</strong>
+          </p>
+        </div>
+        <div class="col col-md-10">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Notes</th>
+                <th scope="col">Size</th>
+                <th scope="col">Unit</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% assign my_projects = customer.metafields.custom.projects.value %}
+              {% for my_project in my_projects %}
+                <tr class="project_detail">
+                  <th scope="">{{ forloop.index }}</th>
+                  <td class="p-name">{{ my_project.project_name.value }}</td>
+                  <td class="p-notes">{{ my_project.project_notes.value }}</td>
+                  <td class="p-size">{{ my_project.size.value }}</td>
+                  <td class="p-unit">{{ my_project.unit.value }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- end Project History -->
+      <button type="button" class="btn-close p-0 m-1 border-0" data-bs-dismiss="alert"></button>
+    </div>
+    <!-- end Project Banner -->
+  </div>
+  <!-- Confirm modal -->
+  <div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+      <div class="modal-content">
+        <div class="modal-header flex-column">
+          <h4 class="modal-title w-100">Add project</h4>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Do you really want to add the project?</p>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" id='saveProject' class="btn btn-success">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

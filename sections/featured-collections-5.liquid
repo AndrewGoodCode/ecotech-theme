@@ -1,0 +1,351 @@
+<!-- featured-collections-5.liquid -->
+<style>
+    .customstyle{{ section.id }} .collection-card__icon svg, .customstyle{{ section.id }} .collection-card__icon .icon, .customstyle{{ section.id }} .collection-card__icon [class^=icon-]{
+      width: {{section.settings.size}}px;
+      height: {{section.settings.size}}px;
+      font-size: {{section.settings.size}}px;
+    }
+    .collection-card__icon{
+        margin:20px;
+    }
+    
+    #collection-list-{{ section.id }}{
+        box-shadow: 0 3px 10px 0 rgb(0,0,0,0.1);;
+    }
+</style>
+<div class="customstyle{{ section.id }} " >
+    {%- include 'style-section' -%}
+      <div class="{{ section.settings.setwidth }}">
+      <div class="section-block" data-aos="{{section.settings.animation}}">
+          {%- include 'section-heading' -%}
+          <div class="collectionlist-wrapper" >
+            <div class="collectionlist-slider row mx-0 {% if section.settings.center_vertical %} align-items-center {% endif %} {% if section.settings.center_hoz %} justify-content-center {% endif %}" id="collection-list-{{ section.id }}">
+              {%- for block in section.blocks -%}
+              {%- case block.settings.width -%}
+                {%- when '20%' -%}
+                {%- assign block_width = 'col-lg-2 col-md-6 ' -%}
+                {%- when '25%' -%}
+                {%- assign block_width = 'col-lg-3 col-md-6 ' -%}
+                {%- when '33%' -%}
+                {%- assign block_width = 'col-lg-4 col-md-6 ' -%}
+                {%- when '41%' -%}
+                {%- assign block_width = 'col-lg-5 col-md-12 ' -%}
+                {%- when '50%' -%}
+                {%- assign block_width = 'col-lg-6 ' -%}
+                {%- when '58%' -%}
+                {%- assign block_width = 'col-lg-7 col-md-12 ' -%}
+                {%- when '66%' -%}
+                {%- assign block_width = 'col-lg-8 col-md-12 ' -%}
+                {%- when '75%' -%}
+                {%- assign block_width = 'col-lg-9 col-md-12 ' -%}
+                {%- when '100%' -%}
+                {%- assign block_width = 'col-12 ' -%}
+              {%- endcase -%}
+              <div class=" collectionlist-item collectionlist-item-5 bg-white col-12 px-0 {{block_width}}"  >
+                  {%- capture current -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+                  
+                  {%- assign featured_collection = collections[block.settings.collection] -%}
+                  {%- assign featured_image = block.settings.image -%}
+                  {%- assign collectionTitle = featured_collection.title | default: 'Collection title' -%}
+                    <div class="collection-card-5 text-center" {{ block.shopify_attributes }} data-aos="{{section.settings.animation}}" data-aos-duration="{{forloop.index | times: 3 | plus: 4  }}00">
+                      {%- if section.settings.style == 'style2' -%}
+                      <div class="collection-card__image ">
+                        <a class="collection-card__link d-flex justify-content-between align-items-center px-4" href="{{featured_collection.url | default :'#'}}" >
+                            {%- if block.settings.icon_collection != blank -%}
+                                <div class="collection-card__icon ml-0" style="color:{{section.settings.iconcolor}};">
+                                    {{block.settings.icon_collection}}
+                                </div>
+                            {%- endif -%}
+                          <div class="text-right">
+                            <h6 class="m-0 text-body collection-card__name">
+                              {{ collectionTitle }}
+                            </h6>
+                            {%- if section.settings.showitem -%}
+                            <p class=" small text-body">{{ featured_collection.products_count | default: 0 }} {{ featured_collection.products_count | pluralize: 'item', 'items' }}</p> 
+                            {%- endif -%}
+                          </div>
+                        </a>
+                      </div>
+                      {%- else -%}
+                      <div class="collection-card__image ">
+                        <a class="collection-card__link" href="{{featured_collection.url | default :'#'}}" >
+                            {%- if block.settings.icon_collection != blank -%}
+                                <div class="collection-card__icon" style="color:{{section.settings.iconcolor}};">
+                                    {{block.settings.icon_collection}}
+                                </div>
+                            {%- endif -%}
+                            <h6 class="m-0 text-body collection-card__name">
+                            {{ collectionTitle }}
+                          </h6>
+                          {%- if section.settings.showitem -%}
+                          <p class=" text-body ">{{ featured_collection.products_count | default: 0 }} {{ featured_collection.products_count | pluralize: 'item', 'items' }}</p> 
+                          {%- endif -%}
+                        </a>
+                      </div>
+                      {% endif %}
+                    </div>
+              </div>
+              {%- endfor -%}
+            </div>
+          </div>
+          {%- if section.blocks.size == 0 -%}
+          {%- include 'no-blocks' -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+    
+    {% schema %}
+    {
+      "name": "Collection list Style 5",
+      "class": "index-section",
+      "max_blocks": 6,
+      "settings": [
+      {
+        "type": "select",
+        "id": "animation",
+        "options": [
+          { "value": "", "label": "None"},
+          { "value": "fade", "label": "Fade"},
+          { "value": "fade-up", "label": "Fade Up"},
+          { "value": "fade-down", "label": "Fade Down"},
+          { "value": "fade-left", "label": "Fade Left"},
+          { "value": "fade-right", "label": "Fade Right"},
+          { "value": "fade-up-right", "label": "Fade Up Right"},
+          { "value": "fade-up-left", "label": "Fade Up Left"},
+          { "value": "fade-down-right", "label": "Fade Down Right"},
+          { "value": "fade-down-left", "label": "Fade Down Left"},
+          { "value": "flip-up", "label": "Flip Up"},
+          { "value": "flip-down", "label": "Flip Down"},
+          { "value": "flip-left", "label": "Flip Left"},
+          { "value": "flip-right", "label": "Flip Right"},
+          { "value": "slide-up", "label": "Slide Up"},
+          { "value": "slide-down", "label": "Slide Down"},
+          { "value": "slide-left", "label": "Slide Left"},
+          { "value": "slide-right", "label": "Slide Right"},
+          { "value": "zoom-in", "label": "Zoom In"},
+          { "value": "zoom-in-up", "label": "Zoom In Up"},
+          { "value": "zoom-in-down", "label": "Zoom In Down"},
+          { "value": "zoom-in-left", "label": "Zoom In Left"},
+          { "value": "zoom-in-right", "label": "Zoom In Right"},
+          { "value": "zoom-out", "label": "Zoom Out"},
+          { "value": "zoom-out-up", "label": "Zoom Out Up"},
+          { "value": "zoom-out-down", "label": "Zoom Out Down"},
+          { "value": "zoom-out-left", "label": "Zoom Out Feft"},
+          { "value": "zoom-out-right", "label": "Zoom Out Right"}
+        ],
+        "label": "Select Animation"
+    },
+      {
+        "type": "text",
+        "id": "paddingsection",
+        "label": "Padding Section",
+        "default": "0px 0px 0px 0px",
+        "info": "Padding: Top Right Bottom Left"
+      },
+      {
+        "type": "text",
+        "id": "paddingmobile",
+        "label": "Padding Section Mobile",
+        "default": "60px 0px 60px 0px",
+        "info": "Padding: Top Right Bottom Left"
+      },
+      {
+        "type": "text",
+        "id": "marginsection",
+        "label": "Margin Section",
+        "default": "0px 0px 0px 0px",
+        "info": "Margin: Top Right Bottom Left"
+      },
+      {
+        "type": "text",
+        "id": "marginmobile",
+        "label": "Margin Mobile",
+        "default": "0px 0px 0px 0px",
+        "info": "Margin: Top Right Bottom Left"
+      },
+      {
+        "type": "color",
+        "id": "bgsection",
+          "label": "Background Section",
+          "default": "#fefefe"
+      },
+      {
+        "type": "select",
+        "id": "setwidth",
+        "label": "Full Width",
+        "default": "container",
+        "options": [
+          {
+            "value": "container",
+            "label": "Box"
+          },
+          {
+            "value": "container-fluid",
+            "label": "Container Fluid"
+          },
+          {
+            "value": "full",
+            "label": "Full"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title_top",
+        "label": "Sub Title Top",
+        "default": "Sub Title Top"
+      },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Collection List Icon"
+        },
+        {
+          "type": "textarea",
+          "id": "des",
+          "label": "HTML / Description"
+        },
+          {
+            "type": "checkbox",
+            "id": "center_vertical",
+            "label": "Center Vertical",
+            "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "center_hoz",
+          "label": "Center Horizontal",
+          "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "showitem",
+            "label": "Show Item",
+            "default": false
+        },
+        {
+            "type": "color",
+            "id": "iconcolor",
+            "label": "Icon Color",
+            "default": "#222222"
+        },
+        {
+            "type": "range",
+            "id": "size",
+            "min": 14,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "label": "Size Icon",
+            "default": 55
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style Collections",
+          "default": "style1",
+          "options": [
+            {
+              "value": "style1",
+              "label": "Style 1"
+            },
+            {
+              "value": "style2",
+              "label": "Style 2"
+            }
+          ]
+        }
+      ],
+      "blocks": [
+        {
+          "type": "collection",
+          "name": "Collection",
+          "settings": [
+            {
+              "id": "collection",
+              "type": "collection",
+              "label": "Collection "
+            },
+            {
+              "id": "icon_collection",
+              "type": "textarea",
+              "label": "Icon / SVG / Image / Html "
+            },
+            {
+              "type": "select",
+              "id": "width",
+              "label": "Container width",
+              "default": "20%",
+              "options": [
+                {
+                  "value": "20%",
+                  "label": "20%"
+                },
+                {
+                  "value": "25%",
+                  "label": "25%"
+                },
+                {
+                  "value": "33%",
+                  "label": "33%"
+                },
+                {
+                  "value": "41%",
+                  "label": "41%"
+                },
+                {
+                  "value": "50%",
+                  "label": "50%"
+                },
+                {
+                  "value": "58%",
+                  "label": "58%"
+                },
+                {
+                  "value": "66%",
+                  "label": "66%"
+                },
+                {
+                  "value": "75%",
+                  "label": "75%"
+                },
+                {
+                  "value": "100%",
+                  "label": "100%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Collection list Style 5 (Icon)",
+          "category": "Collection",
+          "blocks": [
+            {
+              "type": "collection"
+            },
+            {
+              "type": "collection"
+            },
+            {
+              "type": "collection"
+            },
+            {
+              "type": "collection"
+            },
+            {
+              "type": "collection"
+            },
+            {
+              "type": "collection"
+            }
+          ]
+        }
+      ]
+    }
+    {% endschema %}
+    

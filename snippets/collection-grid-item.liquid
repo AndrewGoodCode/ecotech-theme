@@ -1,0 +1,51 @@
+{%- capture current -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+{%- assign collectionTitle = featured_collection.title | default: 'Collection title' -%}
+<div class="collection-card-1 text-center col-12 {% if template != "index" %} col-lg-4 {% endif %}" {{ block.shopify_attributes }}>
+  <div class="collection-card__image overflow-hidden">
+    <a class="hv-image banner-theme photo-wrapper image-content__image-wrapper image-content__image-container" href="{{featured_collection.url | default :'#'}}" 
+      {%- if featured_image != blank -%} 
+      style="padding-top:{{ 1 | divided_by: featured_image.aspect_ratio | times: 100}}%;" 
+      {%- elsif featured_collection.image != blank -%}
+      style="padding-top:{{ 1 | divided_by: featured_collection.image.aspect_ratio | times: 100}}%;" 
+      {%- else -%}
+      style=""
+      {%- endif -%}
+        >
+      {%- assign img_url = featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+      {%- assign f_img_url = featured_collection.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+      {%- if featured_image != blank -%}
+      <img 
+        class="lazyload transition" 
+        data-srcset="{{ img_url }}"
+        data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+        data-aspectratio="{{ featured_image.aspect_ratio }}"
+        data-sizes="auto"
+        alt= {{ collectionTitle }}
+      >
+      <noscript>
+        <img class="lazyloaded" src="{{ featured_image | img_url: '900x' }}" alt="{{ collectionTitle }}">
+      </noscript>
+      {%- elsif featured_collection.image != blank -%}
+      <img 
+      class="lazyload transition" 
+      data-srcset="{{ f_img_url }}"
+      data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+      data-aspectratio="{{ featured_collection.image.aspect_ratio }}"
+      data-sizes="auto"
+      alt= {{ collectionTitle }}
+      >
+      <noscript>
+        <img class="lazyloaded" src="{{ featured_collection.image | img_url: '900x' }}" alt="{{ collectionTitle }}">
+      </noscript>
+      {%- else -%}
+      {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </a>
+  </div>
+  <h5 class="pt-3 mt-0 mb-1">
+    <a class="text-theme text-uppercase" href="{{featured_collection.url | default :'#'}}">
+      {{ collectionTitle }}
+    </a>
+  </h5>
+  <p class="pb-5 visibility-hidden">{{ featured_collection.products_count | default: 0 }} {{ featured_collection.products_count | pluralize: 'product', 'products' }}</p>
+</div>

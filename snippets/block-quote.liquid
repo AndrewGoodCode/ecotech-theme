@@ -1,0 +1,10 @@
+{% if type == 'block' %}
+  {% assign object = block %}
+{% else %}
+  {% assign object = section %}
+{% endif %}
+
+<div class='title-container border-3 border-start border-dark ps-4'>
+  <h5 class='title'>{{object.settings.title}}</h5>
+  <div class='subtitle'>{{object.settings.subtitle | rich_text }}</div>
+</div>

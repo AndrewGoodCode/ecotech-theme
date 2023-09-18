@@ -1,0 +1,57 @@
+{% if type == 'block' %}
+  {% assign object = block %}
+{% else %}
+  {% assign object = section %}
+{% endif %}
+
+<div class="customstyle-{{ object.id }} row py-3 py-md-5 text-left">
+  <div class="col-md-6 pe-md-5 py-4">
+    {% if object.settings.image1 != blank %}
+      <img src="{{object.settings.image1 | img_url: '400x' }}" class="w-100 mb-4" alt="image1">
+    {% endif %}
+    <h5 class="heading">{{ object.settings.heading1 }}</h5>
+    <div class="rich-content py-4">{{ object.settings.content1 | rich_text  }}</div>
+    {% if object.settings.buttonText1 != blank %}
+      {% comment %} <a
+        class="button border border-1 border-dark rounded-pill text-dark px-3 py-2 mt-5"
+        href="{{ object.settings.buttonUrl1 }}"
+      >
+        {{- object.settings.buttonText1 }}
+      </a> {% endcomment %}
+      <a
+        class="mdc-button mdc-button--outlined mt-5"
+        href="{{ object.settings.buttonUrl1 }}"
+      >
+        <span class="mdc-button__ripple"></span>
+        <span class="mdc-button__label">{{- object.settings.buttonText1 }}</span>
+      </a>
+    {% endif %}
+  </div>
+  <div class="col-md-6 ps-md-5 py-4 text-left">
+    {% if object.settings.image2 != blank %}
+      <img src="{{object.settings.image2 | img_url: '400x' }}" class="w-100 mb-4" alt="image2">
+    {% endif %}
+    <h5 class="heading">{{ object.settings.heading2 }}</h5>
+    <div class="rich-content py-4">{{ object.settings.content2 | rich_text  }}</div>
+    {% if object.settings.buttonText2 != blank %}
+      <a
+        class="mdc-button mdc-button--outlined mt-5"
+        href="{{ object.settings.buttonUrl2 }}"
+      >
+        <span class="mdc-button__ripple"></span>
+        <span class="mdc-button__label">{{- object.settings.buttonText2 -}}</span>
+      </a>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .customstyle-{{ object.id }} .rich-content p  {
+    font-size : 15px;
+    min-height : 15px;
+    margin-bottom : 0px;
+  }
+  .customstyle-{{ object.id }} .rich-content ul {
+    padding-left: 30px;
+  }
+</style>

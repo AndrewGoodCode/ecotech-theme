@@ -1,0 +1,96 @@
+
+            <div id="metafields">
+              <div class="">
+                {% if product.metafields.custom.warranty %}
+                  <p><strong>Warranty</strong>: {{ product.metafields.custom.warranty }}</p>
+                {% endif %}
+                {% if product.metafields.custom.benefits %}
+                  <p><strong>Benefits</strong>:</p>
+                  <div class="preline">
+                    {% if product.metafields.custom.benefits.namespace == "json" %}
+                      {% assign benefits = product.metafields.custom.benefits | json %}
+                      {% for item in benefits.children %}
+                        {% if item.type == "list" %}
+                          <ul>
+                          {% for li in item.children %}
+                            {% if li.type == "list-item" %}
+                              <li>{{ li.children[0].value }}</li>
+                            {% endif %}
+                          {% endfor %}
+                          </ul>
+                        {% else %}
+                          <p>{{ item.children[0].value }}</p>
+                        {% endif %}
+                      {% endfor %}
+                    {% else %}
+                      {{ product.metafields.custom.benefits.value | strip_html | escape }}
+                    {% endif %}
+                  </div>
+                {% endif %}
+                {% if product.metafields.custom.care_and_cleaning %}
+                  <p><strong>Care &amp; Cleaning</strong>: {{ product.metafields.custom.care_and_cleaning }}</p>
+                {% endif %}
+                {% if product.metafields.custom.how_to %}
+                  <p><strong>How To</strong>: {{ product.metafields.custom.how_to }}</p>
+                {% endif %}
+                {% if product.metafields.custom.suitable_substrates %}
+                  <p><strong>Suitable Substrates</strong>: {{ product.metafields.custom.suitable_substrates }}</p>
+                {% endif %}
+              </div>
+              <div class="">
+                {% if product.metafields.custom.bndl_products_in_this_kit %}
+                  <p><strong>BNDL Products in this Kit</strong>: {{ product.metafields.custom.bndl_products_in_this_kit }}</p>
+                {% endif %}
+                {% if product.metafields.custom.bndl_required_tools %}
+                  <p><strong>BNDL Required Tools</strong>: {{ product.metafields.custom.bndl_required_tools }}</p>
+                {% endif %}
+                {% if product.metafields.custom.highlights %}
+                  <p><strong>Highlights</strong>: {{ product.metafields.custom.highlights }}</p>
+                {% endif %}
+                {% if product.metafields.custom.technical_specifications %}
+                  <p><strong>Technical Specifications</strong>:</p>
+                  {% for file in product.metafields.custom.technical_specifications %}
+                    <div>
+                      <a href="{{ file.value.url }}" download>{{ file.value.filename }}</a>
+                      <p>Size: {{ file.value.size }}</p>
+                      <p>Content type: {{ file.value.content_type }}</p>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+                {% if product.metafields.custom.certifications %}
+                  <p><strong>Certifications</strong>:</p>
+                  {% for file in product.metafields.custom.certifications %}
+                    <div>
+                      <a href="{{ file.value.url }}" download>{{ file.value.filename }}</a>
+                      <p>Size: {{ file.value.size }}</p>
+                      <p>Content type: {{ file.value.content_type }}</p>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+              <div class="">
+                {% if product.metafields.my_fields.product_brochure %}
+                  <p><strong>Product Brochure</strong>: {{ product.metafields.my_fields.product_brochure }}</p>
+                {% endif %}
+                {% if product.metafields.my_fields.you_may_also_like %}
+                  <p><strong>You May Also Like</strong>: {{ product.metafields.my_fields.you_may_also_like }}</p>
+                {% endif %}
+                {% if product.metafields.my_fields.similar_products %}
+                  <p><strong>Similar Products</strong>: {{ product.metafields.my_fields.similar_products }}</p>
+                {% endif %}
+                {% if product.metafields.my_fields.performance2 %}
+                  <p><strong>Performance</strong>: {{ product.metafields.my_fields.performance2 }}</p>
+                {% endif %}
+                {% if product.metafields.my_fields.key_features %}
+                  <p><strong>Key Features</strong>: {{ product.metafields.my_fields.key_features }}</p>
+                {% endif %}
+              </div>
+              <style>
+                strong {
+                  font-weight: bold !important;
+                }
+                .preline {
+                  white-space: pre-line;
+                }
+              </style>
+            </div>

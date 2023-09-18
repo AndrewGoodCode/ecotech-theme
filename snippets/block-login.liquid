@@ -1,0 +1,32 @@
+{% if shop.customer_accounts_optional or shop.customer_accounts_enabled %}
+  {% if customer  %}
+  <div class="header--acount d-none d-lg-inline-block font-family-1">
+    <a href="/account" data-bs-toggle="tooltip" title="{{'customer.account.title' | t}}" data-bs-placement="top"
+      class="site-header__link site-account ">
+      <span class="account-text">{{'customer.account.title' | t}}</span>
+    </a>
+    <a href="/account/logout" data-bs-toggle="tooltip" title="{{'layout.customer.log_out' | t}}" data-bs-placement="top"
+      class="site-header__link site-logout mr-3">
+      <span class="logout-text">{{'layout.customer.log_out' | t}}</span>
+    </a>
+  </div>
+  {% else %}
+    {% if template != 'customers/login' %} {% comment DOES NOT APPEAR ON LOGIN PAGE - AVOID CONFLICT %} {% endcomment %}
+    <div class="header--acount d-none d-lg-inline-block font-family-1">
+      <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#jsLogin"
+        class="site-header__link site-account js-open-login">
+        <svg version="1.1" id="Layer_1" class="svg-user" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          viewBox="0 0 58.6 62.4" style="enable-background:new 0 0 58.6 62.4;" xml:space="preserve">
+        <path d="M54.2,62.4v-1.2c0-13.3-10.7-23.3-24.9-23.3c-14.2,0-24.9,10-24.9,23.3v1.2H0v-1.2c0-15.8,12.6-27.7,29.3-27.7
+          s29.3,11.9,29.3,27.7v1.2H54.2z M29.3,30.9c-8.5,0-15.4-7-15.4-15.5C13.9,6.9,20.8,0,29.3,0s15.4,7,15.4,15.5
+          C44.7,24,37.8,30.9,29.3,30.9z M29.3,4.4c-6.1,0-11,4.9-11,11s4.9,11,11,11c6.1,0,11-4.9,11-11S35.4,4.4,29.3,4.4z"/>
+        </svg>
+        <span class="account-text txt-icon">{{'customer.login.sign_in' | t}}</span>
+      </a>
+      <!-- <a href="/account/register" class="site-header__link site-register mr-3">
+        <span class="register-text">{{'customer.register.title' | t}}</span>
+      </a> -->
+    </div>
+    {% endif %}
+  {% endif %}
+{% endif %}

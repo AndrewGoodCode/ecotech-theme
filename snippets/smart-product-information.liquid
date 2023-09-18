@@ -1,0 +1,1079 @@
+{% assign products = '' %}
+{% assign variants = '' %}
+{% assign str = '' %}
+{% if product.metafields.custom.extend_bundle != blank %}
+  {% assign extend_bundles = product.metafields.custom.extend_bundle.value %}
+  {% for extend_bundle in extend_bundles %}
+    {% assign products = extend_bundle.products.value %}
+    {% assign variants = extend_bundle.variants.value %}
+    {% for product_item in products %}
+      {% assign metafields = product_item.metafields.custom %}
+      {% for item in metafields %}
+        {% assign temp = ',' | append: item[0] %}
+        {% if str contains temp %}
+        {% else %}
+          {% assign str = str | append: ',' | append: item[0] %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+    {% assign prev = '' %}
+    {% assign current = '' %}
+    {% for variant_item in variants %}
+      {% assign current = variant_item.product.handle %}
+      {% if current != prev %}
+        {% assign metafields = variant_item.product.metafields.custom %}
+        {% for item in metafields %}
+          {% assign temp = ',' | append: item[0] %}
+          {% if str contains temp %}
+          {% else %}
+            {% assign str = str | append: ',' | append: item[0] %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      {% assign prev = current %}
+    {% endfor %}
+  {% endfor %}
+{% endif %}
+
+<div id="accordion" class="nav-tab-info-vertical">
+  <div class="card tab product-description">
+    <div class="card-header">
+      <a class="card-link" data-bs-toggle="collapse" data-bs-target="#collapseOne" href="#">
+        {% include 'icon-arrow-right' %}
+        {{ section.settings.gtab_des | default: 'Description' }}
+      </a>
+    </div>
+    <div id="collapseOne" class="collapse" data-bs-bs-parent="#accordion">
+      <div class="card-body ps-4 ms-3">
+        {{ product.description }}
+      </div>
+    </div>
+  </div>
+  {% if str contains ',key_feature' or product.metafields.custom.key_features != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapse2" href="#">
+          {% include 'icon-arrow-right' %} Key Features
+        </a>
+      </div>
+      <div id="collapse2" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          {{ product.metafields.custom.key_features | metafield_tag }}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              {% if all_products[handle].metafields.custom.key_features != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[handle].metafields.custom.key_features | metafield_tag }}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev and all_products[current].metafields.custom.key_features != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ variant_item.product.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[current].metafields.custom.key_features | metafield_tag }}
+                  </div>
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if str contains ',technical_performance' or product.metafields.custom.technical_performance != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapseTechPerform" href="#">
+          {% include 'icon-arrow-right' %} Technical Performance
+        </a>
+      </div>
+      <div id="collapseTechPerform" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          {{ product.metafields.custom.technical_performance | newline_to_br }}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              {% if all_products[handle].metafields.custom.technical_performance != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[handle].metafields.custom.technical_performance | newline_to_br }}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev and all_products[current].metafields.custom.technical_performance != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ variant_item.product.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[current].metafields.custom.technical_performance | newline_to_br }}
+                  </div>
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if str contains ',application' or product.metafields.custom.application != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapse1" href="#">
+          {% include 'icon-arrow-right' %} Application
+        </a>
+      </div>
+      <div id="collapse1" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          {{ product.metafields.custom.application.value }}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              {% if all_products[handle].metafields.custom.application != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[handle].metafields.custom.application.value }}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev and all_products[current].metafields.custom.application != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ variant_item.product.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[current].metafields.custom.application.value }}
+                  </div>
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% comment %} {% if str contains ',product_yield' or product.metafields.custom.product_yield != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapseProductYield" href="#">
+          {% include 'icon-arrow-right' %} Product Yield
+        </a>
+      </div>
+      <div id="collapseProductYield" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          {{ product.metafields.custom.product_yield | metafield_tag }}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              {% if all_products[handle].metafields.custom.product_yield != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[handle].metafields.custom.product_yield | metafield_tag }}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev and all_products[current].metafields.custom.product_yield != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ variant_item.product.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[current].metafields.custom.product_yield | metafield_tag }}
+                  </div>
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %} {% endcomment %}
+  {% if str contains ',suitable_substrates' or product.metafields.custom.suitable_substrates != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a
+          class="collapsed card-link"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseSutableSubstrates"
+          href="#"
+        >
+          {% include 'icon-arrow-right' %} Suitable Substrates
+        </a>
+      </div>
+      <div id="collapseSutableSubstrates" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          {{ product.metafields.custom.suitable_substrates | metafield_tag }}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              {% if all_products[handle].metafields.custom.suitable_substrates != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[handle].metafields.custom.suitable_substrates | metafield_tag }}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev and all_products[current].metafields.custom.suitable_substrates != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ variant_item.product.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[current].metafields.custom.suitable_substrates | metafield_tag }}
+                  </div>
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if str contains ',certifications' or product.metafields.custom.certifications != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapse12" href="#">
+          {% include 'icon-arrow-right' %} Certifications
+        </a>
+      </div>
+      <div id="collapse12" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          <div class="product-certification">
+            {% assign certifications = product.metafields.custom.certifications.value %}
+            <div class="row">
+              {% for certification in certifications %}
+                <div class="product-certification-item col-3 col-sm-2 col-lg-1">
+                  <a href="{{ certification.clink }}" target="blank">
+                    {%- assign img_url = certification.image | img_url %}
+                    <img src="{{ img_url }}" class="w-100" alt="Certification Image">
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+            {% if product.metafields.custom.extend_bundle != blank %}
+              {% for product_item in products %}
+                {% assign handle = product_item.handle %}
+                {% if all_products[handle].metafields.custom.certifications != blank %}
+                  <div class="mb-4">
+                    <div class="fw-bold">{{ product_item.title }}</div>
+                    {% assign certifications = all_products[handle].metafields.custom.certifications.value %}
+                    <div class="row ms-sm-2 flex-row">
+                      {% for certification in certifications %}
+                        <div class="product-certification-item col-3 col-sm-2 col-lg-1">
+                          <a href="{{ certification.clink }}" target="blank">
+                            {%- assign img_url = certification.image | img_url %}
+                            <img src="{{ img_url }}" class="w-100" alt="Certification Image">
+                          </a>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+              {% assign prev = '' %}
+              {% assign current = '' %}
+              {% for variant_item in variants %}
+                {% assign current = variant_item.product.handle %}
+                {% if current != prev and all_products[current].metafields.custom.certifications != blank %}
+                  <div class="mb-4">
+                    <div class="fw-bold">{{ variant_item.product.title }}</div>
+                    {% assign certifications = all_products[current].metafields.custom.certifications.value %}
+                    <div class="row ms-sm-2 flex-row">
+                      {% for certification in certifications %}
+                        <div class="product-certification-item col-3 col-sm-2 col-lg-1">
+                          <a href="{{ certification.clink }}" target="blank">
+                            {%- assign img_url = certification.image | img_url %}
+                            <img src="{{ img_url }}" class="w-100" alt="Certification Image">
+                          </a>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endif %}
+                {% assign prev = current %}
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if str contains ',technical_specifications' 
+    or product.metafields.custom.technical_specifications != blank
+  %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapse13" href="#">
+          {% include 'icon-arrow-right' %} Technical Documents
+        </a>
+      </div>
+      <div id="collapse13" class="collapse" data-bs-parent="#accordion">
+        {% assign technical_specifications = product.metafields.custom.technical_specifications.value %}
+        <div class="card-body ps-4 ms-3">
+          {% for technical_specification in technical_specifications %}
+            <div>
+              {% assign file_name = technical_specification.url
+                | split: '/'
+                | last
+                | split: '?'
+                | first
+                | split: '.'
+                | first
+                | replace: '_', ' '
+              %}
+              <a href="{{ technical_specification.url }}" download>
+                <img src="{{ 'pdf_file.png' | asset_url }}" alt="File" class="reference-file">
+                {{ file_name }}
+              </a>
+            </div>
+          {% endfor %}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              <div class="">
+                {% assign technical_specifications = product_item.metafields.custom.technical_specifications.value %}
+                {% if technical_specifications != blank %}
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  {% for technical_specification in technical_specifications %}
+                    <div>
+                      {% assign file_name = technical_specification.url
+                        | split: '/'
+                        | last
+                        | split: '?'
+                        | first
+                        | split: '.'
+                        | first
+                        | replace: '_', ' '
+                      %}
+                      <a href="{{ technical_specification.url }}" download>
+                        <img src="{{ 'pdf_file.png' | asset_url }}" alt="File" class="reference-file">
+                        {{ file_name }}
+                      </a>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev %}
+                <div class="">
+                  {% assign handle = variant_item.product.handle %}
+                  <div class="">
+                    {% assign technical_specifications = variant_item.product.metafields.custom.technical_specifications.value %}
+                    {% if technical_specifications != blank %}
+                      <div class="fw-bold">{{ variant_item.product.title }}</div>
+                      {% for technical_specification in technical_specifications %}
+                        <div>
+                          {% assign file_name = technical_specification.url
+                            | split: '/'
+                            | last
+                            | split: '?'
+                            | first
+                            | split: '.'
+                            | first
+                            | replace: '_', ' '
+                          %}
+                          <a href="{{ technical_specification.url }}" download>
+                            <img src="{{ 'pdf_file.png' | asset_url }}" alt="File" class="reference-file">
+                            {{ file_name }}
+                          </a>
+                        </div>
+                      {% endfor %}
+                    {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if str contains ',product_brochure' or product.metafields.my_fields.product_brochure != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapse14" href="#">
+          {% include 'icon-arrow-right' %} Product brochure
+        </a>
+      </div>
+      <div id="collapse14" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          {% assign product_brochure = product.metafields.my_fields.product_brochure.value %}
+          {% if product_brochure != blank %}
+            <div>
+              {% assign file_name = product_brochure.url
+                | split: '/'
+                | last
+                | split: '?'
+                | first
+                | split: '.'
+                | first
+                | replace: '_', ' '
+              %}
+              <a href="{{ product_brochure.url }}" download>
+                <img src="{{ 'pdf_file.png' | asset_url }}" alt="File" class="reference-file">
+                {{ file_name }}
+              </a>
+            </div>
+          {% endif %}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              {% if all_products[handle].metafields.custom.product_brochure != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  {% assign product_brochure = all_products[handle].metafields.my_fields.product_brochure.value %}
+                  <div>
+                    {% assign file_name = product_brochure.url
+                      | split: '/'
+                      | last
+                      | split: '?'
+                      | first
+                      | split: '.'
+                      | first
+                      | replace: '_', ' '
+                    %}
+                    <a href="{{ product_brochure.url }}" download>
+                      <img src="{{ 'pdf_file.png' | asset_url }}" alt="File" class="reference-file">
+                      {{ file_name }}
+                    </a>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev and all_products[current].metafields.custom.product_brochure != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ variant_item.product.title }}</div>
+                  {% assign product_brochure = all_products[current].metafields.my_fields.product_brochure.value %}
+                  <div>
+                    {% assign file_name = product_brochure.url
+                      | split: '/'
+                      | last
+                      | split: '?'
+                      | first
+                      | split: '.'
+                      | first
+                      | replace: '_', ' '
+                    %}
+                    <a href="{{ product_brochure.url }}" download>
+                      <img src="{{ 'pdf_file.png' | asset_url }}" alt="File" class="reference-file">
+                      {{ file_name }}
+                    </a>
+                  </div>
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if str contains ',colour_chart' or product.metafields.custom.colour_chart != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapseColourChart" href="#">
+          {% include 'icon-arrow-right' %} Colour Chart
+        </a>
+      </div>
+      <div id="collapseColourChart" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          {% assign colour_chart = product.metafields.custom.colour_chart.value %}
+          <div class="d-flex flex-wrap">
+            {% for item in colour_chart %}
+              <div class="p-1 col-4 col-sm-2 d-flex align-items-center">
+                <img src="{{ item.preview_image | img_url }}" alt="File" class="reference-file w-100">
+              </div>
+            {% endfor %}
+          </div>
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              {% if all_products[handle].metafields.custom.colour_chart != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  {% assign colour_chart = all_products[handle].metafields.custom.colour_chart.value %}
+                  <div class="d-flex flex-wrap">
+                    {% for item in colour_chart %}
+                      <div class="p-1 col-4 col-sm-2 d-flex align-items-center">
+                        <img src="{{ item.preview_image | img_url }}" alt="File" class="reference-file w-100">
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev and all_products[current].metafields.custom.colour_chart != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ variant_item.product.title }}</div>
+                  {% assign colour_chart = all_products[handle].metafields.custom.colour_chart.value %}
+                  <div class="d-flex flex-wrap">
+                    {% for item in colour_chart %}
+                      <div class="p-1 col-4 col-sm-2 d-flex align-items-center">
+                        <img src="{{ item.preview_image | img_url }}" alt="File" class="reference-file w-100">
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif -%}
+  {% if str contains ',bundle_includes' or product.metafields.custom.bundle_includes != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapse0" href="#">
+          {% include 'icon-arrow-right' %}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            Bundle Includes
+          {% else %}
+            Product Includes
+          {% endif %}
+        </a>
+      </div>
+      <div id="collapse0" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          <div class="">
+            {% if product.metafields.custom.extend_bundle != blank %}
+              {% for product_item in products %}
+                {% assign handle = product_item.handle %}
+                {% if all_products[handle].metafields.global.description_tag != blank %}
+                  <div class="">
+                    <div class="fw-bold">{{ product_item.title }}</div>
+                    <div class="fst-italic fs-6 text-secondary lh-1">
+                      {{ all_products[handle].metafields.global.description_tag }}
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+              {% assign prev = '' %}
+              {% assign current = '' %}
+              {% for variant_item in variants %}
+                {% assign current = variant_item.product.handle %}
+                {% if current != prev and all_products[current].metafields.global.description_tag != blank %}
+                  <div class="">
+                    <div class="fw-bold">{{ variant_item.product.title }}</div>
+                    <div class="fst-italic fs-6 text-secondary lh-1">
+                      {{ all_products[current].metafields.global.description_tag }}
+                    </div>
+                  </div>
+                {% endif %}
+                {% assign prev = current %}
+              {% endfor %}
+            {% endif %}
+            {% if product.metafields.custom.bundle_includes != blank %}
+              {% assign bundle_includes = product.metafields.custom.bundle_includes.value %}
+              {% assign prev = '' %}
+              {% assign current = '' %}
+              {% for variant_item in bundle_includes %}
+                {% assign current = variant_item.product.handle %}
+                {% if current != prev %}
+                  <div class="">
+                    <div class="fw-bold">{{ variant_item.product.title }}</div>
+                    <div class="fst-italic fs-6 text-secondary lh-1">
+                      {{ all_products[current].metafields.global.description_tag }}
+                    </div>
+                  </div>
+                {% endif %}
+                {% assign prev = current %}
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if str contains ',yield' or product.metafields.custom.yield != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapseYield" href="#">
+          {% include 'icon-arrow-right' %} Yield
+        </a>
+      </div>
+      <div id="collapseYield" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          {% assign yield = product.metafields.custom.yield.value %}
+          {% if yield.gallon_per_package.value != blank %}
+            <div><span class="">Gallons per Package</span> - {{ yield.gallon_per_package.value }}</div>
+          {% endif %}
+          {% if yield.sqf_per_gallon.value != blank %}
+            <div><span class="">Square Feet Coverage per Gallon </span> - {{ yield.sqf_per_gallon.value }}</div>
+          {% endif %}
+          {% if yield.modify_percentage.value != blank %}
+            <div><span class="">Modify Percentage </span> - {{ yield.modify_percentage.value }}</div>
+          {% endif %}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              {% if all_products[handle].metafields.custom.yield != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {% assign yield = all_products[handle].metafields.custom.yield.value %}
+                    {% if yield.gallon_per_package.value != blank %}
+                      <div><span class="">Gallons per Package</span> - {{ yield.gallon_per_package.value }}</div>
+                    {% endif %}
+                    {% if yield.sqf_per_gallon.value != blank %}
+                      <div>
+                        <span class="">Square Feet Coverage per Gallon </span> - {{ yield.sqf_per_gallon.value }}
+                      </div>
+                    {% endif %}
+                    {% if yield.modify_percentage.value != blank %}
+                      <div><span class="">Modify Percentage </span> - {{ yield.modify_percentage.value }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev and all_products[current].metafields.custom.yield != blank %}
+                <div>
+                  <div class="fw-bold">{{ variant_item.product.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {% assign yield = all_products[current].metafields.custom.yield.value %}
+                    {% if yield.gallon_per_package.value != blank %}
+                      <div><span class="">Gallons per Package</span> - {{ yield.gallon_per_package.value }}</div>
+                    {% endif %}
+                    {% if yield.sqf_per_gallon.value != blank %}
+                      <div>
+                        <span class="">Square Feet Coverage per Gallon </span> - {{ yield.sqf_per_gallon.value }}
+                      </div>
+                    {% endif %}
+                    {% if yield.modify_percentage.value != blank %}
+                      <div><span class="">Modify Percentage </span> - {{ yield.modify_percentage.value }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if str contains ',you_may_also_like' or product.metafields.custom.you_may_also_like != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapse3" href="#">
+          {% include 'icon-arrow-right' %} You May Also Like
+        </a>
+      </div>
+      <div id="collapse3" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          {% assign selected_products = product.metafields.custom.you_may_also_like.value %}
+          {% for each_product in selected_products %}
+            <div>
+              <a href="{{ each_product.url }}">{{ each_product.title }}</a>
+            </div>
+          {% endfor %}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              {% if all_products[handle].metafields.custom.you_may_also_like != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  {% assign selected_products = all_products[handle].metafields.custom.you_may_also_like.value %}
+                  {% for each_product in selected_products %}
+                    <div class="fst-italic fs-6 text-secondary lh-1">
+                      <a href="{{ each_product.url }}">{{ each_product.title }}</a>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev and all_products[current].metafields.custom.you_may_also_like != blank %}
+                <div>
+                  <div class="fw-bold">{{ variant_item.product.title }}</div>
+                  {% assign selected_products = all_products[current].metafields.custom.you_may_also_like.value %}
+                  {% for each_product in selected_products %}
+                    <div class="fst-italic fs-6 text-secondary lh-1">
+                      <a href="{{ each_product.url }}">{{ each_product.title }}</a>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if str contains ',similar_products' or product.metafields.custom.similar_products != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapse4" href="#">
+          {% include 'icon-arrow-right' %} Similar products
+        </a>
+      </div>
+      <div id="collapse4" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          {% assign selected_products = product.metafields.custom.similar_products.value %}
+          {% for each_product in selected_products %}
+            <div>
+              <a href="{{ each_product.url }}">{{ each_product.title }}</a>
+            </div>
+          {% endfor %}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              {% if all_products[handle].metafields.custom.similar_products != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  {% assign selected_products = all_products[handle].metafields.custom.similar_products.value %}
+                  {% for each_product in selected_products %}
+                    <div class="fst-italic fs-6 text-secondary lh-1">
+                      <a href="{{ each_product.url }}">{{ each_product.title }}</a>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev and all_products[current].metafields.custom.similar_products != blank %}
+                <div>
+                  <div class="fw-bold">{{ variant_item.product.title }}</div>
+                  {% assign selected_products = all_products[current].metafields.custom.similar_products.value %}
+                  {% for each_product in selected_products %}
+                    <div class="fst-italic fs-6 text-secondary lh-1">
+                      <a href="{{ each_product.url }}">{{ each_product.title }}</a>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if str contains ',highlights' or product.metafields.custom.highlights != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapse6" href="#">
+          {% include 'icon-arrow-right' %} Highlights
+        </a>
+      </div>
+      <div id="collapse6" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          {{ product.metafields.custom.highlights | metafield_tag }}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              {% if all_products[handle].metafields.custom.highlights != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[handle].metafields.custom.highlights | metafield_tag }}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev and all_products[current].metafields.custom.highlights != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ variant_item.product.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[current].metafields.custom.highlights | metafield_tag }}
+                  </div>
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if str contains ',care_cleaning' or product.metafields.custom.care_cleaning != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapse8" href="#">
+          {% include 'icon-arrow-right' %} Care Cleaning
+        </a>
+      </div>
+      <div id="collapse8" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          {{ product.metafields.custom.care_cleaning | metafield_tag }}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              {% if all_products[handle].metafields.custom.care_cleaning != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[handle].metafields.custom.care_cleaning | metafield_tag }}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev and all_products[current].metafields.custom.care_cleaning != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ variant_item.product.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[current].metafields.custom.care_cleaning | metafield_tag }}
+                  </div>
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if str contains ',benefits' or product.metafields.custom.benefits != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapse9" href="#">
+          {% include 'icon-arrow-right' %} Benefits
+        </a>
+      </div>
+      <div id="collapse9" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          {{ product.metafields.custom.benefits | metafield_tag }}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              {% if all_products[handle].metafields.custom.benefits != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[handle].metafields.custom.benefits | metafield_tag }}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev and all_products[current].metafields.custom.benefits != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ variant_item.product.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[current].metafields.custom.benefits | metafield_tag }}
+                  </div>
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if str contains ',warranty' or product.metafields.custom.warranty != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapse10" href="#">
+          {% include 'icon-arrow-right' %} Warranty
+        </a>
+      </div>
+      <div id="collapse10" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          {{ product.metafields.custom.warranty | metafield_tag }}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              {% if all_products[handle].metafields.custom.warranty != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[handle].metafields.custom.warranty | metafield_tag }}
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev and all_products[current].metafields.custom.warranty != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ variant_item.product.title }}</div>
+                  <div class="fst-italic fs-6 text-secondary lh-1">
+                    {{ all_products[current].metafields.custom.warranty | metafield_tag }}
+                  </div>
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if str contains ',how_to' or product.metafields.custom.how_to != blank %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapse11" href="#">
+          {% include 'icon-arrow-right' %} How to
+        </a>
+      </div>
+      <div id="collapse11" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          {% assign how_to = product.metafields.custom.how_to.value %}
+          {% if how_to != blank %}
+            <div>
+              {% assign file_name = how_to.url
+                | split: '/'
+                | last
+                | split: '?'
+                | first
+                | split: '.'
+                | first
+                | replace: '_', ' '
+              %}
+              <a href="{{ how_to.url }}" download>
+                <img src="{{ 'pdf_file.png' | asset_url }}" alt="File" class="reference-file">
+                {{ file_name }}
+              </a>
+            </div>
+          {% endif %}
+          {% if product.metafields.custom.extend_bundle != blank %}
+            {% for product_item in products %}
+              {% assign handle = product_item.handle %}
+              {% if all_products[handle].metafields.custom.how_to != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ product_item.title }}</div>
+                  {% assign how_to = all_products[handle].metafields.my_fields.how_to.value %}
+                  <div>
+                    {% assign file_name = how_to.url
+                      | split: '/'
+                      | last
+                      | split: '?'
+                      | first
+                      | split: '.'
+                      | first
+                      | replace: '_', ' '
+                    %}
+                    <a href="{{ product_brochure.url }}" download>
+                      <img src="{{ 'pdf_file.png' | asset_url }}" alt="File" class="reference-file">
+                      {{ file_name }}
+                    </a>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% assign prev = '' %}
+            {% assign current = '' %}
+            {% for variant_item in variants %}
+              {% assign current = variant_item.product.handle %}
+              {% if current != prev and all_products[current].metafields.custom.how_to != blank %}
+                <div class="">
+                  <div class="fw-bold">{{ variant_item.product.title }}</div>
+                  {% assign how_to = all_products[current].metafields.my_fields.how_to.value %}
+                  <div>
+                    {% assign file_name = how_to.url
+                      | split: '/'
+                      | last
+                      | split: '?'
+                      | first
+                      | split: '.'
+                      | first
+                      | replace: '_', ' '
+                    %}
+                    <a href="{{ product_brochure.url }}" download>
+                      <img src="{{ 'pdf_file.png' | asset_url }}" alt="File" class="reference-file">
+                      {{ file_name }}
+                    </a>
+                  </div>
+                </div>
+              {% endif %}
+              {% assign prev = current %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  {% if block.settings.gtab_review_enable %}
+    <div class="card">
+      <div class="card-header">
+        <a class="collapsed card-link" data-bs-toggle="collapse" data-bs-target="#collapseThree" href="#">
+          {% include 'icon-arrow-right' %} Reviews
+        </a>
+      </div>
+      <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
+        <div class="card-body ps-4 ms-3">
+          <div id="shopify-product-reviews" data-bs-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+<style>
+  .card .metafield-rich_text_field ul {
+    padding-left: 30px;
+  }
+  a .reference-file {
+    height: 20px;
+    vertical-align: middle;
+  }
+</style>

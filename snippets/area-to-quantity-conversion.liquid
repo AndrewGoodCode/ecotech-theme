@@ -1,0 +1,20 @@
+{% assign squareFootagePerGallon = product.metafields.area_to_quantity_conversion.square_footage_per_gallon %}
+{% assign packageSizeInGallons = product.metafields.area_to_quantity_conversion.package_size_in_gallons %}
+{% assign packageYieldPerSquareFoot = squareFootagePerGallon | times: packageSizeInGallons %}
+<input type="hidden" name="metafields[area_to_quantity_conversion][package_yield_per_square_foot]" value="{{ packageYieldPerSquareFoot }}" />
+<script>
+  var squareFootagePerGallonInput = document.querySelector('input[name="metafields[area_to_quantity_conversion][square_footage_per_gallon]"]');
+  var packageSizeInGallonsInput = document.querySelector('input[name="metafields[area_to_quantity_conversion][package_size_in_gallons]"]');
+  var packageYieldPerSquareFootInput = document.querySelector('input[name="metafields[area_to_quantity_conversion][package_yield_per_square_foot]"]');
+
+  function updatePackageYieldPerSquareFoot() {
+    var squareFootagePerGallonValue = parseFloat(squareFootagePerGallonInput.value);
+    var packageSizeInGallonsValue = parseFloat(packageSizeInGallonsInput.value);
+    var packageYieldPerSquareFootValue = squareFootagePerGallonValue * packageSizeInGallonsValue;
+    packageYieldPerSquareFootInput.value = packageYieldPerSquareFootValue.toFixed(2);
+  }
+
+  squareFootagePerGallonInput.addEventListener('change', updatePackageYieldPerSquareFoot);
+  packageSizeInGallonsInput.addEventListener('change', updatePackageYieldPerSquareFoot);
+  updatePackageYieldPerSquareFoot();
+</script>

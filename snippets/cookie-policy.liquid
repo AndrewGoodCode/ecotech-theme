@@ -1,0 +1,23 @@
+{%- if settings.cookie_enable -%}
+<!-- cookie-policy.liquid -->
+<style>
+  .js-cookie-policy{display:none;position:fixed;width:100%;bottom:0;left:0;z-index:99;background:#000000;padding:15px 0;color:#fff}.js-cookie-policy a{color:#fff;}.js-btn-ok{padding:6px 32px;font-size: 12px;}
+  @media (min-width: 992px){
+    .js-cookie-policy.style2{width: 500px;}
+  }
+
+</style>
+<div class="js-cookie-policy {{settings.style_cookie}}">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-12  {% if settings.style_cookie == 'style1' %} col-sm-8 col-md-9 col-lg-10 {% else %} mb-4 {% endif %}">
+        {{settings.cookie_message}}
+        {%- if settings.cookie_url != blank and settings.cookie_url_text != blank  -%}
+        <a class="link-line" href="{{settings.cookie_url}}" target="_blank">{{settings.cookie_url_text}}</a>
+        {%- endif -%}
+      </div>
+      <div class="col text-right"><button class="btn btn-theme js-btn-ok">{{settings.cookie_ok}}</button></div>
+    </div>
+  </div>
+</div>
+{%- endif -%}

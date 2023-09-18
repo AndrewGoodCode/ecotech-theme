@@ -1,0 +1,61 @@
+<style>
+    /* custom css */
+    .form-control:focus::placeholder{
+        color: #bbb !important;      
+    }
+    .js-qty {
+      width : 1px!important;
+      height : 1px!important;
+      display : none!important;
+    } 
+    .product-form__item--quantity {
+      display : none;
+    }
+</style>
+{% comment %} For measurement {% endcomment %}
+<div id='variantMetafieldsJSON' style='display:none;'>
+{% for variant in product.variants %}
+    {% assign gallon_per_package = variant.metafields.custom.yield_for_variant.value.gallon_per_package.value %}
+    {% assign sqf_per_gallon = variant.metafields.custom.yield_for_variant.value.sqf_per_gallon.value %}
+    {% assign modify_percentage = variant.metafields.custom.yield_for_variant.value.modify_percentage.value %}
+    <div class='variant-{{ variant.id }}'>
+        <div class='gallon_per_package'>{{gallon_per_package}}</div>
+        <div class='sqf_per_gallon'>{{sqf_per_gallon}}</div>
+        <div class='modify_percentage'>{{modify_percentage}}</div>
+    </div>
+{% endfor %}
+</div>
+<div class='container w-100'>  
+    {% assign current_variant = product.selected_or_first_available_variant %}
+    {% assign gallon_per_package = product.metafields.custom.yield.value.gallon_per_package.value %}
+    {% assign sqf_per_gallon = product.metafields.custom.yield.value.sqf_per_gallon.value %}
+    {% assign modify_percentage = product.metafields.custom.yield.value.modify_percentage.value %}
+    {% if current_variant.metafields.custom.yield_for_variant.value.gallon_per_package %}
+        {% assign gallon_per_package = current_variant.metafields.custom.yield_for_variant.value.gallon_per_package.value %}
+        {% assign sqf_per_gallon = current_variant.metafields.custom.yield_for_variant.value.sqf_per_gallon.value %}
+        {% assign modify_percentage = current_variant.metafields.custom.yield_for_variant.value.modify_percentage.value %}
+    {% endif %}
+    {% if gallon_per_package != blank %}
+        <input type='hidden' id='gallon-per-pkg' value='{{ gallon_per_package }}' />
+        <input type='hidden' id='sqf-per-gallon' value='{{ sqf_per_gallon }}' />
+        <input type='hidden' id='modify-percentage' value='{{ modify_percentage }}' />
+    {% endif %}
+  <div class="row">
+      <div class="p-1">
+          <div class="mt-3 mb-3">
+            <div class="row">
+              <label for="quantity-temp" class="form-label col-sm-6">Product Quantity</label>
+              <div class="col-sm-6">
+                <input type="number" class="form-control " id="quantity-temp" placeholder="1">
+              </div>
+            </div>
+            <div class="row mt-1">
+              <label for="area-temp" class="form-label col-sm-6">Product Area</label>
+              <div class="col-md-6">
+                <input type="number" class="form-control " id="area-temp" placeholder="2000">
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>

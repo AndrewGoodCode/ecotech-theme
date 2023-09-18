@@ -1,0 +1,289 @@
+<!-- product-tab-2.liquid  -->
+<style>
+    .customstyle{{ section.id }} .prdtab-content-3{
+        column-count:{{section.settings.col}};
+        column-gap: {{section.settings.columngap}}px;
+    }
+    @media (max-width: 990px){
+        .prdtab-content-3{
+            column-gap: 20px !important;
+        }
+    }
+    .prdtab-content-3 .producttab-item{
+        display: inline-block;
+        width: 100%;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+    .producttab-item-first{
+        margin-bottom: 64px;
+    }
+</style>
+<div class="customstyle{{ section.id }} p-tab3"  data-aos={{section.settings.animation}} >
+    {%- include 'style-section' -%}
+    <div class="{{ section.settings.setwidth }}">
+      <div class="section-block">
+        {%- include 'section-heading' -%}
+        <div id="producttabs-{{ section.id }}" data-section-id="{{ section.id }}" >
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center">
+                    <ul class="nav nav-tabs nav-tabs-1 mt-n3 mb-5 font-weight-bold text-right" role="tablist">
+                        {%- for block in section.blocks -%}
+                        <li class="nav-item">
+                          <a class="nav-link nav-link-{{block.id}} {% if forloop.first %}active{% endif %}" data-bs-toggle="tab" href="#prdtab2-{{block.id}}" role="tab" {{ block.shopify_attributes }}>
+                            {{block.settings.title}}
+                          </a>
+                        </li>
+                        {%- endfor -%}
+                    </ul>
+                </div>
+            </div>
+
+          <div class="tab-content">
+            {%- for block in section.blocks -%}
+            {%- assign collection = collections[block.settings.collection]  -%}
+            {%- assign limit = section.settings.limit -%}
+            <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="prdtab2-{{block.id}}" role="tabpanel">
+              <div class="prdtab-content prdtab-content-3">
+                {%- if section.settings.showtitletop -%}
+                <div class="producttab-item producttab-item-first">
+                    <div class="text-center">
+                        {%- if block.settings.html != blank -%}
+                            <div>
+                                {{block.settings.html}}
+                            </div>
+                        {%- endif -%}
+                        {%- if section.settings.showtitle -%}
+                            <h3><a href="{{collection.url}}" style="color:{{block.settings.colortabimage}}">{{block.settings.title}}</a></h3>
+                        {%- endif -%}
+                        {%- if section.settings.showitem -%}
+                        <p href="{{collection.url}}" style="color:{{block.settings.colortabimage}}">{{ collection.products_count | default: 0 }} {{ collection.products_count | pluralize: 'product', 'products' }}</p>
+                        {%- endif -%}
+                    </div>
+                </div>
+                {%- endif -%}
+                {%- if collection != blank -%}
+                    {%- for product in collection.products limit: limit -%}
+                            <div class="producttab-item " data-scroll data-scroll-speed="1">
+                                {%- include 'product-card', product: product -%}
+                            </div>
+                    {%- endfor -%}
+
+                {%- else -%}
+                {%- for i in (1..limit) -%}
+                        <div class="producttab-item">
+                            {%- include 'product-grid-blank' -%}
+                        </div>
+                {%- endfor -%}
+                    
+                {%- endif -%}
+              </div>
+            </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% schema %}
+  {
+    "name": "Product tab 3",
+    "class": "index-section",
+    "max_blocks": 6,
+    "settings": [
+      {
+        "type": "select",
+        "id": "animation",
+        "options": [
+          { "value": "", "label": "None"},
+          { "value": "fade", "label": "Fade"},
+          { "value": "fade-up", "label": "Fade Up"},
+          { "value": "fade-down", "label": "Fade Down"},
+          { "value": "fade-left", "label": "Fade Left"},
+          { "value": "fade-right", "label": "Fade Right"},
+          { "value": "fade-up-right", "label": "Fade Up Right"},
+          { "value": "fade-up-left", "label": "Fade Up Left"},
+          { "value": "fade-down-right", "label": "Fade Down Right"},
+          { "value": "fade-down-left", "label": "Fade Down Left"},
+          { "value": "flip-up", "label": "Flip Up"},
+          { "value": "flip-down", "label": "Flip Down"},
+          { "value": "flip-left", "label": "Flip Left"},
+          { "value": "flip-right", "label": "Flip Right"},
+          { "value": "slide-up", "label": "Slide Up"},
+          { "value": "slide-down", "label": "Slide Down"},
+          { "value": "slide-left", "label": "Slide Left"},
+          { "value": "slide-right", "label": "Slide Right"},
+          { "value": "zoom-in", "label": "Zoom In"},
+          { "value": "zoom-in-up", "label": "Zoom In Up"},
+          { "value": "zoom-in-down", "label": "Zoom In Down"},
+          { "value": "zoom-in-left", "label": "Zoom In Left"},
+          { "value": "zoom-in-right", "label": "Zoom In Right"},
+          { "value": "zoom-out", "label": "Zoom Out"},
+          { "value": "zoom-out-up", "label": "Zoom Out Up"},
+          { "value": "zoom-out-down", "label": "Zoom Out Down"},
+          { "value": "zoom-out-left", "label": "Zoom Out Feft"},
+          { "value": "zoom-out-right", "label": "Zoom Out Right"}
+        ],
+        "label": "Select Animation"
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "60px 0px 60px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+      {
+        "type": "select",
+        "id": "setwidth",
+        "label": "Full Width",
+        "default": "container",
+        "options": [
+          {
+            "value": "container",
+            "label": "Box"
+          },
+          {
+            "value": "container-fluid",
+            "label": "Container Fluid"
+          },
+          {
+            "value": "full",
+            "label": "Full"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title_top",
+        "label": "Sub Title Top",
+        "default": "Sub Title Top"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Product tab 3"
+      },
+      {
+        "type": "textarea",
+        "id": "des",
+        "label": "HTML / Description"
+      },
+      {
+        "type": "range",
+        "id": "limit",
+        "min": 1,
+        "max": 16,
+        "step": 1,
+        "label": "Limit items",
+        "default":4
+      },
+      {
+        "type": "range",
+        "id": "col",
+        "min": 2,
+        "max": 4,
+        "step": 1,
+        "label": "Columns",
+        "default":2
+      },
+      {
+        "type": "range",
+        "id": "columngap",
+        "min": 20,
+        "max": 120,
+        "step": 10,
+        "label": "Column Gap",
+        "default":120
+      },
+      {
+        "type": "checkbox",
+        "id": "showtitletop",
+        "label": "Show Block title",
+        "default": true
+    },
+      {
+        "type": "checkbox",
+        "id": "showtitle",
+        "label": "Show Title tab",
+        "default": true
+    },
+    {
+        "type": "checkbox",
+        "id": "showitem",
+        "label": "Show Item",
+        "default": true
+    }
+    ],
+    "blocks": [
+      {
+        "type": "collection",
+        "name": "Collection",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Title tab"
+          },
+          {
+            "label": "Collection",
+            "id": "collection",
+            "type": "collection"
+          },
+          {
+            "type": "textarea",
+            "id": "html",
+            "label": "HTML / Description"
+          },
+        {
+          "type": "color",
+          "id": "colortabimage",
+            "label": "Color Text on Image",
+            "default": "#000000"
+        }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product tab 3",
+        "category": "Collection",
+        "blocks": [
+          {
+            "type": "collection"
+          },
+          {
+            "type": "collection"
+          },
+          {
+            "type": "collection"
+          }
+        ]
+      }
+    ]
+  }
+  {% endschema %}

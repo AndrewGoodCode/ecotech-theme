@@ -1,0 +1,252 @@
+<!-- image-content-6.liquid -->
+
+<div class="customstyle{{ section.id }} img-ct-6">
+    {%- include 'style-section' -%}
+  <div class="{{ section.settings.setwidth }}">
+    <div class="section-block">
+      <div class="row m-0">
+        <div class="{{section.settings.colleft}} col-12 p-0 overflow-hidden" data-aos="{{section.settings.animation}}" data-aos-duration="500">
+            <div class="p-5" style="background-color:{{section.settings.bghtml}} ;">
+                <div class="p-4 flex__item image-content__text">
+                    <div class="rte-setting">{{ section.settings.text }}</div>
+                </div>
+            </div>
+            <div class="img-sectionleft py-5 text-center position-relative" style="background-color:{{section.settings.bg_imageleft}};">
+                {%- if section.settings.image != blank -%}
+                    <noscript>
+                        <img src="{{ section.settings.image | img_url: '600x' }}" alt="{{ section.settings.image.alt }}" class="image-content__image">
+                    </noscript>
+                    <div class="image-content__image-container">
+                        <img class="lazyload transition image-content__image"
+                            src="{{ section.settings.image | img_url: '200x' }}"
+                            data-src="{{ img_url }}"
+                            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                            data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+                            alt="{{ section.settings.image.alt | escape }}">
+                    </div>
+                {%- else -%}
+                    <div class="image-content__image">
+                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                {%- endif -%}
+                {%- if section.settings.textimageleft != blank -%}
+                <div class="position-absolute p-5 bottom right" data-aos="{{section.settings.animation}}" >{{section.settings.textimageleft}}</div>
+                {%- endif -%}
+            </div>
+        </div>
+        <div class="col-12 col-lg px-0 d-flex align-items-center justify-content-center position-relative overflow-hidden text-center" data-aos="{{section.settings.animation}}" data-aos-duration="900" style="background-color:{{section.settings.bg_imageright}};">
+            <div class="img-sectionright pt-5 pt-lg-0">
+                {%- if section.settings.imageright != blank -%}
+                    <noscript>
+                        <img src="{{ section.settings.imageright | img_url: '650x' }}" alt="{{ section.settings.imageright.alt }}" class="image-content__image">
+                    </noscript>
+                    <div class="image-content__image-container ">
+                        <img class="image-content__image lazyload transition"
+                            src="{{ section.settings.imageright | img_url: '445x' }}"
+                            data-src="{{ img_url }}"
+                            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                            data-aspectratio="{{ section.settings.imageright.aspect_ratio }}"
+                            alt="{{ section.settings.imageright.alt | escape }}">
+                    </div>
+                {%- else -%}
+                    <div class="image-content__image">
+                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                {%- endif -%}
+                {%- if section.settings.textimageright != blank -%}
+                <div class="position-absolute p-5 bottom right " data-aos="{{section.settings.animation}}">{{section.settings.textimageright}}</div>
+                {%- endif -%}
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  
+  {% schema %}
+  {
+    "name": "Image with text Creative",
+    "class": "index-section",
+    "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        { "value": "", "label": "None"},
+        { "value": "fade", "label": "Fade"},
+        { "value": "fade-up", "label": "Fade Up"},
+        { "value": "fade-down", "label": "Fade Down"},
+        { "value": "fade-left", "label": "Fade Left"},
+        { "value": "fade-right", "label": "Fade Right"},
+        { "value": "fade-up-right", "label": "Fade Up Right"},
+        { "value": "fade-up-left", "label": "Fade Up Left"},
+        { "value": "fade-down-right", "label": "Fade Down Right"},
+        { "value": "fade-down-left", "label": "Fade Down Left"},
+        { "value": "flip-up", "label": "Flip Up"},
+        { "value": "flip-down", "label": "Flip Down"},
+        { "value": "flip-left", "label": "Flip Left"},
+        { "value": "flip-right", "label": "Flip Right"},
+        { "value": "slide-up", "label": "Slide Up"},
+        { "value": "slide-down", "label": "Slide Down"},
+        { "value": "slide-left", "label": "Slide Left"},
+        { "value": "slide-right", "label": "Slide Right"},
+        { "value": "zoom-in", "label": "Zoom In"},
+        { "value": "zoom-in-up", "label": "Zoom In Up"},
+        { "value": "zoom-in-down", "label": "Zoom In Down"},
+        { "value": "zoom-in-left", "label": "Zoom In Left"},
+        { "value": "zoom-in-right", "label": "Zoom In Right"},
+        { "value": "zoom-out", "label": "Zoom Out"},
+        { "value": "zoom-out-up", "label": "Zoom Out Up"},
+        { "value": "zoom-out-down", "label": "Zoom Out Down"},
+        { "value": "zoom-out-left", "label": "Zoom Out Feft"},
+        { "value": "zoom-out-right", "label": "Zoom Out Right"}
+      ],
+      "label": "Select Animation"
+  },
+    {
+        "type": "text",
+        "id": "paddingsection",
+        "label": "Padding Section",
+        "default": "0px 0px 0px 0px",
+        "info": "Padding: Top Right Bottom Left"
+    },
+    {
+        "type": "text",
+        "id": "paddingmobile",
+        "label": "Padding Section Mobile",
+        "default": "60px 0px 60px 0px",
+        "info": "Padding: Top Right Bottom Left"
+    },
+    {
+        "type": "text",
+        "id": "marginsection",
+        "label": "Margin Section",
+        "default": "0px 0px 0px 0px",
+        "info": "Margin: Top Right Bottom Left"
+    },
+    {
+        "type": "text",
+        "id": "marginmobile",
+        "label": "Margin Mobile",
+        "default": "0px 0px 0px 0px",
+        "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+        "label": "Background Section",
+        "default": "#fefefe"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "colleft",
+      "label": "Column Left",
+      "default": "col-lg-5",
+      "options": [
+        {
+          "value": "col-lg-4",
+          "label": "33%"
+        },
+        {
+          "value": "col-lg-5",
+          "label": "41%"
+        },
+        {
+          "value": "col-lg-6",
+          "label": "50%"
+        },
+        {
+          "value": "col-lg-7",
+          "label": "58%"
+        },
+        {
+          "value": "col-lg-8",
+          "label": "66%"
+        }
+      ]
+    },
+    {
+        "type": "header",
+        "content": "Block Left"
+    },
+    
+    {
+        "type": "textarea",
+        "id": "text",
+        "label": "HTML / Description",
+        "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+    },
+    {
+        "type": "color",
+        "id": "bghtml",
+          "label": "Background Html",
+          "default": "#F3F3F3"
+      },
+    {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+    },
+    {
+        "type": "color",
+        "id": "bg_imageleft",
+          "label": "Background Image Left",
+          "default": "#ffd8d4"
+      },
+      {
+        "type": "textarea",
+        "id": "textimageleft",
+        "label": "Text Image Left"
+    },
+    {
+        "type": "header",
+        "content": "Block Right"
+    },
+    
+    {
+        "type": "image_picker",
+        "id": "imageright",
+        "label": "Image Right"
+    },
+    {
+        "type": "color",
+        "id": "bg_imageright",
+          "label": "Background Image Right",
+          "default": "#bde1dd"
+    },
+    {
+        "type": "textarea",
+        "id": "textimageright",
+        "label": "Text Image Right"
+    }
+    ],
+    "presets": [
+      {
+        "name": "Image with text Creative",
+        "category": "Image"
+      }
+    ]
+  }
+  {% endschema %}
+  
