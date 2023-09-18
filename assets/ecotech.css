@@ -1,0 +1,110 @@
+body, input, textarea, button, select, li, a {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.4;
+}
+.product-single #accordion .card {
+  border-bottom: 1px solid #e9e9e9;
+}
+  .product-single #accordion .card .card-header {
+    border-bottom: none; 
+  }
+  .product-single #accordion .card .card-body {
+    padding-bottom: 30px;
+  }
+    .product-single #accordion .card .card-body .text-secondary {
+      padding-left: 10px;
+      line-height: 1.2rem !important;
+      padding-bottom: 12px;
+    }
+    .product-single #accordion .card .card-body .fw-bold {
+      margin-bottom: 10px;
+      padding: 3px 10px;
+      background-color: #f3f3f3;
+    }
+    /* .product-single #accordion .card .card-body .product-certification .fw-bold {
+      margin-bottom: 10px;
+      padding: 3px 10px;
+      background-color: #f3f3f3;
+    } */
+      .product-single #accordion .card .card-body .product-certification .product-certification-item {
+        padding-right: 10px;
+      }
+.card .card-body ul,
+.card .card-body ol, 
+.card .metafield-rich_text_field ul,
+.card .metafield-rich_text_field ol {
+          padding-left: 30px;
+      }
+.card.tab.product-description {}
+  .card.tab.product-description ul {
+    padding-top: 20px
+    padding-bottom: 10px;
+  }
+  .card.tab.product-description ul li {
+    padding-bottom: 10px;
+  }
+
+
+.mega-col .mega-col-inner .widget-inner ul.nav-links {
+  padding-left: 15px;
+}
+  .mega-col .mega-col-inner .widget-inner ul.nav-links, .mega-col .mega-col-inner .widget-inner ul.nav-links a {
+    line-height: 1rem;
+  }
+
+.product-card__overlay,
+.collection-card__meta .text-body {
+  display: none !important;
+}
+
+.content-block__meta h4.h-26 {
+  line-height: 0.7;
+}
+
+.my-gallery .product-single__photo {
+    margin-bottom: 4px;
+}
+
+.mdc-button {
+  transition: background-color 0.5s ease;
+}
+.mb-5.mdc-button.mdc-button--outlined .mdc-button__label {
+  font-size: 0.875rem;
+}
+.mdc-button--raised:not(:disabled),
+.mdc-button--outlined:not(:disabled) {
+  background-color: #8CA33C;
+  color: #ffffff;
+  border: none;
+}
+.mdc-button:hover,
+.mdc-button:active {
+  background-color: #647633;
+} 
+
+/* BUNDLE FORM */
+
+.smart-form {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  color: #333;
+}
+.smart-form, .smart-form * {
+  transition: all 0.5s ease-out 0.5s;
+}
+  .smart-form .card {
+    border-color: #e8e8e8;
+  }
+  .smart-form .left-side {
+    background-color: #f7f7f7;
+  }
+    .smart-form .left-side h3.h-label.small {
+      font-size: 0.8rem !important;
+    }
+    .smart-form .left-side span.bundle-name {
+      font-size: 1.4rem !important;
+    }
+    .smart-form .left-side .description {
+      line-height: 1.3rem !important;
+    }
